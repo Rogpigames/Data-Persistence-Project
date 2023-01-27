@@ -8,6 +8,8 @@ public class DataManager : MonoBehaviour
     // Start is called before the first frame update
     public static DataManager Instance;
     public string userName;
+    public string savedUserName;
+    public int savedScore;
 
     private void Awake()
     {
@@ -18,6 +20,7 @@ public class DataManager : MonoBehaviour
         }
 
         LoadName();
+        LoadScore();
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -26,12 +29,14 @@ public class DataManager : MonoBehaviour
     class SaveData //Clase que creas para guardar todo
     {
         public string userScoreName;
+        public int gameScore;
     }
 
     public void SaveName()
     {
         SaveData dataUserName = new SaveData();
-        dataUserName.userScoreName = userName;
+        savedUserName = userName;
+        dataUserName.userScoreName = savedUserName;
 
         string jsonUserName = JsonUtility.ToJson(dataUserName);
 
@@ -46,7 +51,29 @@ public class DataManager : MonoBehaviour
             string jsonUserName = File.ReadAllText(path);
             SaveData dataUserName = JsonUtility.FromJson<SaveData>(jsonUserName);
 
-            userName = dataUserName.userScoreName;
+            savedUserName = dataUserName.userScoreName;
+        }
+    }
+
+    public void SaveScore()
+    {
+        SaveData dataScoreName = new SaveData();
+        dataScoreName.gameScore = savedScore;
+
+        string jsonUserName = JsonUtility.ToJson(dataScoreName);
+
+        File.WriteAllText(Application.persistentDataPath + "/highestscorenumber.json", jsonUserName);
+    }
+
+    public void LoadScore()
+    {
+        string path = Application.persistentDataPath + "/highestscorenumber.json";
+        if (File.Exists(path))
+        {
+            string jsonUserName = File.ReadAllText(path);
+            SaveData dataScoreName = JsonUtility.FromJson<SaveData>(jsonUserName);
+
+            savedScore = dataScoreName.gameScore;
         }
     }
 }

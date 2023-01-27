@@ -10,6 +10,8 @@ using UnityEditor;
 public class MenuUI : MonoBehaviour
 {
     public TextMeshProUGUI highestScoreText;
+    public MainManager mainManager;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,7 @@ public class MenuUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void StartNew()
@@ -46,7 +48,7 @@ public class MenuUI : MonoBehaviour
 
     IEnumerator ShowScoreCoroutine()
     {
-        yield return new WaitForSeconds(2);
-        highestScoreText.text = "Best score: " + DataManager.Instance.userName;
+        yield return new WaitForEndOfFrame();
+        highestScoreText.text = "Best Score: " + DataManager.Instance.savedUserName + " : " + DataManager.Instance.savedScore;
     }
 }
