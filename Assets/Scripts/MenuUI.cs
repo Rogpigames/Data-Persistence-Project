@@ -9,20 +9,23 @@ using UnityEditor;
 
 public class MenuUI : MonoBehaviour
 {
+    public TextMeshProUGUI highestScoreText;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(ShowScoreCoroutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void StartNew()
     {
+        DataManager.Instance.SaveName();
         SceneManager.LoadScene(1);
     }
 
@@ -33,5 +36,17 @@ public class MenuUI : MonoBehaviour
 #else
         Application.Quit(); // original code to quit Unity player
 #endif
+    }
+
+    public void SaveUserName(string input)
+    {
+        DataManager.Instance.userName = input;
+        Debug.Log(DataManager.Instance.userName);
+    }
+
+    IEnumerator ShowScoreCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        highestScoreText.text = "Best score: " + DataManager.Instance.userName;
     }
 }
