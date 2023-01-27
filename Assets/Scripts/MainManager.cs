@@ -76,9 +76,12 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-        DataManager.Instance.savedScore = m_Points;
-        DataManager.Instance.SaveScore();
-        DataManager.Instance.SaveName();
+        if (m_Points > DataManager.Instance.savedScore)
+        {
+            DataManager.Instance.savedScore = m_Points;
+            DataManager.Instance.SaveScore();
+            DataManager.Instance.SaveName();
+        }    
     }
 
     IEnumerator SaveScoreCoroutine()

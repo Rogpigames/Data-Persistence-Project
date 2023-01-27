@@ -26,8 +26,7 @@ public class MenuUI : MonoBehaviour
     }
 
     public void StartNew()
-    {
-        DataManager.Instance.SaveName();
+    {     
         SceneManager.LoadScene(1);
     }
 
